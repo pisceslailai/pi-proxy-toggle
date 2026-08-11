@@ -51,14 +51,12 @@ function refreshStatus(ctx: ExtensionContext) {
   if (!ctx.hasUI) return;
   const s = loadState();
   const env = currentEnvProxy();
-  const text = env ? `代理:开 ${env}` : "代理:关";
   if (s.showStatusbar) {
-    // 编辑器上方 widget：不受自定义 footer 宽度截断影响
-    ctx.ui.setWidget(STATUS_KEY, [text]);
-    // footer 也留一份短文本，双保险
+    // 短文本进 footer（powerline-footer 会显示扩展状态，行尾位置）
     ctx.ui.setStatus(STATUS_KEY, env ? "代理:开" : "代理:关");
+    // 终端标题栏常显，永不截断
+    ctx.ui.setTitle(env ? `代理:开 | ${env}` : "代理:关");
   } else {
-    ctx.ui.setWidget(STATUS_KEY, undefined);
     ctx.ui.setStatus(STATUS_KEY, undefined);
   }
 }
