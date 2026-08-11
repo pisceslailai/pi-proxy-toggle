@@ -1,0 +1,10 @@
+{
+  "name": "pi-proxy-toggle",
+  "version": "0.1.0",
+  "description": "Pi extension: quickly toggle HTTP proxy on/off with a status bar indicator",
+  "license": "MIT",
+  "keywords": ["pi-package", "pi", "pi-coding-agent", "proxy", "extension"],
+  "pi": {
+    "extensions": ["./src/index.ts"]
+  }
+}
