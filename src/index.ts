@@ -50,12 +50,17 @@ function applyEnv(state: ProxyState) {
 function refreshStatus(ctx: ExtensionContext) {
   if (!ctx.hasUI) return;
   const s = loadState();
-  if (!s.showStatusbar) {
-    ctx.ui.setStatus(STATUS_KEY, undefined);
-    return;
-  }
   const env = currentEnvProxy();
-  ctx.ui.setStatus(STATUS_KEY, env ? `代理:开 ${env}` : "代理:关");
+  const text = env ? `代理:开 ${env}` : "代理:关";
+  if (s.showStatusbar) {
+    // 编辑器上方 widget：不受自定义 footer 宽度截断影响
+    ctx.ui.setWidget(STATUS_KEY, [text]);
+    // footer 也留一份短文本，双保险
+    ctx.ui.setStatus(STATUS_KEY, env ? "代理:开" : "代理:关");
+  } else {
+    ctx.ui.setWidget(STATUS_KEY, undefined);
+    ctx.ui.setStatus(STATUS_KEY, undefined);
+  }
 }
 
 export default function (pi: ExtensionAPI) {
